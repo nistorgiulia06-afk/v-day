@@ -53,9 +53,12 @@ p { font-size:18px; }
     background:#e94560;
     color:white;
     cursor:pointer;
+    position: relative; /* normal în flux */
+    z-index: 1;
 }
 
 #noBtn {
+    margin-top:10px;
     padding:12px 20px;
     font-size:16px;
     border:none;
@@ -63,11 +66,8 @@ p { font-size:18px; }
     background:#e94560;
     color:white;
     cursor:pointer;
-    position:fixed;   /* fix încă de la început */
-    top:70%;          /* poziție inițială */
-    left:50%;
-    transform: translateX(-50%);
-    z-index:1000;     /* deasupra textului */
+    position: relative; /* normal în flux */
+    z-index: 1;
 }
 
 input {
@@ -157,7 +157,7 @@ function showMessage() {
 
     photo.style.display = "block";
 
-    // VIBRAȚIE - sigur pe iOS/Android, pentru că e click efectiv
+    // VIBRAȚIE sigur pe iOS/Android
     if (navigator.vibrate) {
         navigator.vibrate([200, 100, 200]);
     }
@@ -176,7 +176,7 @@ function createHeart() {
 }
 setInterval(createHeart, 400);
 
-/* RUNAWAY BUTTON - vizibilitate sigură */
+/* RUNAWAY BUTTON - doar după interacțiune */
 const noBtn = document.getElementById("noBtn");
 noBtn.addEventListener("touchstart", moveButton);
 noBtn.addEventListener("mouseover", moveButton);
@@ -192,10 +192,13 @@ function moveButton() {
     const x = Math.random() * maxX;
     const y = Math.random() * maxY;
 
+    noBtn.style.position = "fixed";  // devine fixed doar acum
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
+    noBtn.style.zIndex = 1000;
 }
 </script>
 
 </body>
 </html>
+
