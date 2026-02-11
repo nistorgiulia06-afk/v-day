@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pentru Pookie ❤️</title>
+
+<style>
+body {
+    margin:0;
+    padding:0;
+    background:white;
+    color:black;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    text-align:center;
+    overflow:hidden;
+}
+
+#login, #content {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    width:90%;
+    max-width:400px;
+}
+
+#content { display:none; margin-top:100px; }
+
+h1 { font-size:24px; }
+p { font-size:18px; }
+
+.heart {
+    position:fixed;
+    top:-10px;
+    color:red;
+    font-size:18px;
+    animation: fall linear infinite;
+    pointer-events:none;
+}
+
+@keyframes fall {
+    to { transform: translateY(100vh); opacity:0; }
+}
+
+#yesBtn, #noBtn {
+    margin-top:20px;
+    padding:12px 20px;
+    font-size:16px;
+    border:none;
+    border-radius:12px;
+    background:#e94560;
+    color:white;
+    cursor:pointer;
+}
+
+input {
+    padding:10px;
+    font-size:16px;
+    width:70%;
+    border-radius:8px;
+    border:1px solid #ccc;
+}
+
+#secretMessage {
+    display:none;
+    margin-top:20px;
+    font-size:18px;
+    opacity:0;
+    transition: opacity 1.5s ease;
+}
+#secretMessage.show { opacity:1; }
+
+#finalPhoto { display:none; margin-top:20px; }
+#finalPhoto img { width:80%; max-width:300px; border-radius:15px; }
+
+.cinematic { animation: fadeInScale 1s ease forwards; }
+@keyframes fadeInScale { from {transform:scale(0.8); opacity:0;} to {transform:scale(1); opacity:1;} }
+</style>
+</head>
+
+<body>
+
+<audio id="romanticAudio" src="costel-biju.mp3" preload="auto"></audio>
+
+<!-- LOGIN -->
+<div id="login">
+    <h2>🔐 Enter Password</h2>
+    <input type="password" id="password" placeholder="Password">
+    <br>
+    <button onclick="checkPassword()">Enter</button>
+</div>
+
+<!-- CONTENT -->
+<div id="content">
+    <h1>Happy Valentine's Day, my favourite developer! ❤️</h1>
+    <p>Vrei să fii Valentinul meu, Pookie?</p>
+
+    <button id="yesBtn" onclick="showMessage()">YES 💘</button>
+    <button id="noBtn">NO ❌</button>    
+    
+    <div id="secretMessage">
+        Răspuns corect!  
+        <br><br>
+        Te iubesc cel mai mult!! ❤️
+    </div>
+
+    <div id="finalPhoto">
+        <img src="poza-noi.jpg" alt="Noi doi">
+    </div>
+</div>
+
+<script>
+const audio = document.getElementById("romanticAudio");
+
+function checkPassword() {
+    const pass = document.getElementById("password").value;
+    if(pass === "Tuffy") {
+        document.getElementById("login").style.display = "none";
+        document.getElementById("content").style.display = "block";
+
+        if (navigator.vibrate) navigator.vibrate([200,100,200]);
+        audio.play();
+    } else {
+        alert("Wrong password, hint: 🍊 :>");
+    }
+}
+
+function showMessage() {
+    const msg = document.getElementById("secretMessage");
+    const photo = document.getElementById("finalPhoto");
+
+    msg.style.display = "block";
+    msg.classList.add("show");
+    msg.classList.add("cinematic");
+
+    photo.style.display = "block";
+}
+
+/* FALLING HEARTS */
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+    document.body.appendChild(heart);
+
+    setTimeout(() => { heart.remove(); }, 5000);
+}
+setInterval(createHeart, 400);
+
+/* RUNAWAY BUTTON */
+const noBtn = document.getElementById("noBtn");
+noBtn.addEventListener("touchstart", moveButton);
+noBtn.addEventListener("mouseover", moveButton);
+
+function moveButton() {
+    const btnWidth = noBtn.offsetWidth;
+    const btnHeight = noBtn.offsetHeight;
+    const padding = 10;
+
+    const maxX = window.innerWidth - btnWidth - padding;
+    const maxY = window.innerHeight - btnHeight - padding;
+
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+
+    noBtn.style.position = "fixed";
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+}
+</script>
+
+</body>
+</html>
